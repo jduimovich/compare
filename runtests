@@ -1,0 +1,63 @@
+
+export LD_LIBRARY_PATH=/jdk/jdk-17.0.6+10/lib 
+echo "LD_LIBRARY_PATH is $LD_LIBRARY_PATH" 
+echo 
+echo "Running java 8 binary for -version "
+./jdk8u362-b09/bin/java -version   
+echo "Running ldd on java 8 binary for -version "
+ldd ./jdk8u362-b09/bin/java
+echo 
+echo "Running java 8 binary for -version env -i to remove environment "
+env -i ./jdk8u362-b09/bin/java -version 
+echo "Running ldd on java 8 binary for -version env -i to remove environment "
+env -i ldd ./jdk8u362-b09/bin/java
+echo  
+export LD_LIBRARY_PATH=/jdk/jdk-11.0.18+10/lib 
+echo "LD_LIBRARY_PATH is $LD_LIBRARY_PATH" 
+
+echo 
+echo "Running java 8 binary for -version "
+./jdk8u362-b09/bin/java -version   
+echo "Running ldd on java 8 binary for -version "
+ldd ./jdk8u362-b09/bin/java
+echo 
+echo "Running java 8 binary for -version env -i to remove environment "
+env -i ./jdk8u362-b09/bin/java -version 
+echo "Running ldd on java 8 binary for -version env -i to remove environment "
+env -i ldd ./jdk8u362-b09/bin/java
+echo   
+
+./jdk8u362-b09/bin/javac Sleep.java
+
+export LD_LIBRARY_PATH=/jdk/jdk-17.0.6+10/lib 
+echo "Running lsof on java to see what files are open "
+echo "LD_LIBRARY_PATH is $LD_LIBRARY_PATH" 
+./jdk8u362-b09/bin/java Sleep &  
+PID=$! 
+echo "Background is $PID"
+sleep 2
+ps -ale 
+lsof $PID
+wait
+
+export LD_LIBRARY_PATH=/jdk/jdk-11.0.18+10/lib 
+echo "Running lsof on java to see what files are open "
+echo "LD_LIBRARY_PATH is $LD_LIBRARY_PATH" 
+./jdk8u362-b09/bin/java Sleep &  
+PID=$! 
+echo "Background is $PID"
+sleep 2
+ps -ale 
+lsof $PID
+wait
+
+export LD_LIBRARY_PATH=
+echo "Running lsof on java to see what files are open "
+echo "LD_LIBRARY_PATH is $LD_LIBRARY_PATH" 
+./jdk8u362-b09/bin/java Sleep &  
+PID=$! 
+echo "Background is $PID"
+sleep 2
+ps -ale 
+lsof $PID
+wait
